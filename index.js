@@ -16,7 +16,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 const allowedOrigins = [
-  "http://localhost:3000"
+  "http://localhost:3000",
+  "https://booksy-admin-panel.vercel.app"
 ];
 
 app.use(cors({
