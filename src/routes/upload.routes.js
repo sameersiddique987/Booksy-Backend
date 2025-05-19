@@ -16,7 +16,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// Fix here: change route path from "/upload" to "/"
 router.post("/", upload.single("image"), async (req, res) => {
   try {
     const localPath = req.file.path;

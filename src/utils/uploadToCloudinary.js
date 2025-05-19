@@ -12,7 +12,7 @@ const uploadImageToCloudinary = async (localPath) => {
     const result = await cloudinary.uploader.upload(localPath, {
       resource_type: "auto",
     });
-    fs.unlinkSync(localPath); // local file delete kar do
+    fs.unlinkSync(localPath); 
     return result.secure_url;  
   } catch (error) {
     fs.unlinkSync(localPath);

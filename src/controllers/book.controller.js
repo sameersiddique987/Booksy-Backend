@@ -11,16 +11,11 @@ export const getBooks = async (req, res) => {
   }
 };
 
-// Create new book with image upload
 export const createBook = async (req, res) => {
   try {
-    const { title, author, price, description } = req.body;
+    const { title, author, price, description, image } = req.body;
 
-    let imageUrl = "";
-    if (req.file) {
-      imageUrl = await uploadImageToCloudinary(req.file.path);
-      if (!imageUrl) return res.status(500).json({ message: "Image upload failed" });
-    }
+    let imageUrl = image || "";
 
     const newBook = new Book({
       title,
@@ -33,25 +28,40 @@ export const createBook = async (req, res) => {
     await newBook.save();
     res.status(201).json(newBook);
   } catch (err) {
+    console.error("❌ Failed to create book:", err);
     res.status(500).json({ message: "Failed to create book" });
   }
 };
 
-// Update a book with optional new image
 export const updateBook = async (req, res) => {
   try {
-    const { title, author, price, description } = req.body;
+    const { title, author, price, description, image } = req.body;
+
     let updateData = { title, author, price, description };
+
+    if (image) {
+      updateData.image = image;
+    }
 
     if (req.file) {
       const imageUrl = await uploadImageToCloudinary(req.file.path);
-      if (!imageUrl) return res.status(500).json({ message: "Image upload failed" });
+      if (!imageUrl) {
+        return res.status(500).json({ message: "Image upload failed" });
+      }
       updateData.image = imageUrl;
     }
 
-    const updated = await Book.findByIdAndUpdate(req.params.id, updateData, { new: true });
+    const updated = await Book.findByIdAndUpdate(req.params.id, updateData, {
+      new: true,
+    });
+
+    if (!updated) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
     res.json(updated);
   } catch (err) {
+    console.error("❌ Update Error:", err);
     res.status(500).json({ message: "Failed to update book" });
   }
 };
