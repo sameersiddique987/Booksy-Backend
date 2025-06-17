@@ -4,9 +4,17 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import connectDB from "./src/db/index.js";
+<<<<<<< HEAD
+import routes from "./src/routes/user.routes.js";
+import bookRoutes from "./src/routes/book.routes.js";
+import adminLogin from "./src/routes/admin.login.routes.js";
+import uploadRoutes from "./src/routes/upload.routes.js";
+import Auth from "./src/routes/user.routes"
+=======
 import authRoutes from './src/routes/user.routes.js';
 import productRoutes from './src/routes/product.Routes.js';
 import reviewRoutes from './src/routes/review.Routes.js';
+>>>>>>> 064c02ca330e206318f8dc0f481f62f815b1257b
 
 const app = express();
 // Middleware
@@ -37,9 +45,17 @@ app.get("/", (req, res) => {
 }); 
 
 // API Routes
+<<<<<<< HEAD
+app.use("/api/v1", routes);
+app.use("/books", bookRoutes);
+app.use("/api/v1", adminLogin);
+app.use("/upload", uploadRoutes);
+app.use("/Auth", Auth );
+=======
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/reviews', reviewRoutes);
+>>>>>>> 064c02ca330e206318f8dc0f481f62f815b1257b
 // Connect to DB and start server
 connectDB()
   .then(() => {
