@@ -1,22 +1,56 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
-const userSchema = new mongoose.Schema({
-  name: String,
-  email: { type: String, unique: true },
-  password: String,
-  isAdmin: { type: Boolean, default: false },
-  wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
-});
+const userSchema = new mongoose.Schema(
+  {
+    firstname: {
+      type: String,
+      required: [true, 'Firstname is required'],
+    },
+    lastname: {
+      type: String,
+      required: [true, 'Lastname is required'],
+    },
+    email: {
+      type: String,
+      required: [true, 'Email is required'],
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: [true, 'Password is required'],
+    },
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+      default: 'user',
+    },
+    // نئی فیلڈز شامل کریں:
+    name: {
+      type: String,
+      // optional: required: false, یا اپنی مرضی سے
+    },
+    phoneNumber: {
+      type: String,
+    },
+    profilePicture: {
+      type: String,  // یہ آپ کی فائل کا path اسٹور کرے گا
+    },
+  },
+  { timestamps: true }
+);
 
-userSchema.pre('save', async function () {
-  if (!this.isModified('password')) return;
+
+// **Password Hashing Middleware**
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 10);
+  next();
 });
 
-userSchema.methods.comparePassword = function (password) {
-  return bcrypt.compare(password, this.password);
+// Password comparison method
+userSchema.methods.comparePassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
 };
 
-const User = mongoose.model('User', userSchema);
-export default User;
+export default mongoose.model('User', userSchema);
