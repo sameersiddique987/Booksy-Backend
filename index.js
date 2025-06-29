@@ -8,6 +8,7 @@ import routes from "./src/routes/user.routes.js";
 import bookRoutes from "./src/routes/book.routes.js";
 import adminLogin from "./src/routes/admin.login.routes.js";
 import uploadRoutes from "./src/routes/upload.routes.js";
+import orderRoutes from "./src/routes/order.routes.js"
 
 const app = express();
 // Middleware
@@ -44,6 +45,8 @@ app.use("/api/v1", routes);
 app.use("/books", bookRoutes);
 app.use("/api/v1", adminLogin);
 app.use("/upload", uploadRoutes);
+app.use("/api/v1", orderRoutes);
+
 
 // Connect to DB and start server
 connectDB()

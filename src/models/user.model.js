@@ -25,16 +25,16 @@ const userSchema = new mongoose.Schema(
       enum: ['user', 'admin'],
       default: 'user',
     },
-    // نئی فیلڈز شامل کریں:
+  
     name: {
       type: String,
-      // optional: required: false, یا اپنی مرضی سے
+
     },
     phoneNumber: {
       type: String,
     },
     profilePicture: {
-      type: String,  // یہ آپ کی فائل کا path اسٹور کرے گا
+      type: String,  
     },
   },
   { timestamps: true }
