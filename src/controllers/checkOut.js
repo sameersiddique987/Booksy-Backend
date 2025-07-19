@@ -15,7 +15,7 @@ const checkout = async (req, res) => {
   try {
     const { products } = req.body;
 
-    console.log("📦 Received Products:", products);
+    console.log(" Received Products:", products);
 
     if (!Array.isArray(products) || products.length === 0) {
       return res
@@ -71,8 +71,8 @@ const checkout = async (req, res) => {
       line_items: lineItems,
       mode: "payment",
       success_url:
-        "http://localhost:3000/success?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "http://localhost:3000/cancel",
+        "https://booksy-project.vercel.app/success?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url: "https://booksy-project.vercel.app/cancel",
       metadata: {
         orderId: newOrder._id.toString(),
       },
