@@ -4,8 +4,8 @@ import {verifyToken} from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-router.get("/all", verifyToken, getAllOrders); // ✅ admin
-router.get("/my",verifyToken, getUserOrders); // ✅ user-specific
+router.get("/all", verifyToken, getAllOrders);
+router.get("/my",verifyToken, getUserOrders); 
 router.post("/", verifyToken, createOrder);
 router.put("/status", verifyToken, updateOrderStatus);
 
